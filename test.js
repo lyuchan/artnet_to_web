@@ -1,16 +1,32 @@
-const SerialPort = require('serialport');
-const port = new SerialPort('COM8', { baudRate: 115200 });
+const WebSocket = require('ws');
 
-const data = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; // 這是一個示例數據陣列，長度為 10
+// 創建 WebSocket 伺服器，監聽在 127.0.0.1:8081
+const server = new WebSocket.Server({ port: 8080 });
 
-// 計算數據長度
-const length = data.length;
+// 監聽連接事件
+server.on('connection', (socket) => {
+    console.log('已建立連接');
 
-// 將數據長度作為一個 32 位整數值發送到 Arduino
-const lengthBuffer = Buffer.alloc(4);
-lengthBuffer.writeUInt32LE(length);
-port.write(lengthBuffer);
+    // 監聽從客戶端接收到的資料
+    socket.on('message', (data) => {
+        console.log(`接收到資料: ${data}`);
 
-// 將數據陣列作為二進制數據發送到 Arduino
-const dataBuffer = Buffer.from(data);
-port.write(dataBuffer);
+        // 將接收到的資料轉發給 127.0.0.1:8080
+        const client = new WebSocket('ws://127.0.0.1:8081');
+        client.on('open', () => {
+            client.send(data);
+            console.log(`資料已轉發至 127.0.0.1:8080: ${data}`);
+            client.close();
+        });
+    });
+
+    // 監聽關閉事件
+    socket.on('close', () => {
+        console.log('連接已關閉');
+    });
+
+    // 監聽錯誤事件
+    socket.on('error', (error) => {
+        console.error(`連接錯誤: ${error.message}`);
+    });
+});
