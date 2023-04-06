@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>light</title>
+</head>
+<script>
+    let R = 0
+    let G = 0
+    let B = 0
+    let flag = false
+    let url = window.location.href//取得當前網址
+    url = url.replace("https://", "");//去除https
+    url = url.replace("http://", "");//去除http
+    url = url.replace("webtally", "");//去除/
+    url = url.replace("/", "");//去除/
+    url = "ws://" + url;//加入ws://
+    var ws = new WebSocket(url)
+    ws.onopen = () => {
+    }
+    ws.onclose = () => {
+    }
+    ws.onmessage = event => {
+        if (flag) {
+            let res = JSON.parse(event.data);
+            document.body.style.backgroundColor = 'rgb(' + res.data[R - 1] + ',' + res.data[G - 1] + ',' + res.data[B - 1] + ')';
+            console.log(event)
+        }
+    }
+
+    function myFunction() {
+        R = document.getElementById("R").value
+        G = document.getElementById("G").value
+        B = document.getElementById("B").value
+        document.getElementById("R").style.display = 'none';
+        document.getElementById("G").style.display = 'none';
+        document.getElementById("B").style.display = 'none';
+        document.getElementById("button").style.display = 'none';
+        flag = true
+    }
+</script>
+
+<body id="back" style="background-color: #000000">
+    <input id="R">
+    <input id="G">
+    <input id="B">
+    <button id="button" onclick="myFunction()" nc>send</button>
+</body>
+
+</html>
