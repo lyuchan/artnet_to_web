@@ -16,7 +16,6 @@ let old_r = 0
 let old_g = 0
 let old_b = 0
 let old_s = 0
-let serverip = "light.henrywu.tw:3000"
 socket.on('open', () => {
     console.log('已连接到WebSocket服务器');
 
@@ -33,8 +32,8 @@ socket.on('open', () => {
         // console.log(JSON.stringify({ r: r, g: g, b: b }))
 
         if (old_r != r || old_g != g || old_b != b || old_s != shutter) {
-            socket.send(JSON.stringify({ t: "password", d: d, r: r, g: g, b: b, s: shutter }));
-            //console.log(JSON.stringify({ r: r, g: g, b: b }))
+            socket.send(JSON.stringify({ t: "password", r: r, g: g, b: b, s: shutter }));
+            // console.log(JSON.stringify({ r: r, g: g, b: b }))
             old_r = r;
             old_g = g;
             old_b = b;

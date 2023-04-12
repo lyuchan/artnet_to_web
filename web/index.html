@@ -33,6 +33,7 @@
     ws.onmessage = event => {
 
         let res = JSON.parse(event.data);
+        // console.log(res)
         document.body.style.backgroundColor = 'rgb(' + res.r + ',' + res.g + ',' + res.b + ')';
         if (res.s <= 55) {
             document.body.style.animationDuration = ('0s'); // Change here
