@@ -25,8 +25,8 @@ wss.on("connection", (ws) => {
 		let data = JSON.parse(event)
 		if (data.t = "password") {
 			delete data.t;
-			send(JSON.stringify(data));
 			data.m = store.m;
+			send(JSON.stringify(data));
 			store = data;
 		}
 
