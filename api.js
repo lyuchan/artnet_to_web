@@ -14,7 +14,7 @@ app.get("/", (req, res) => {
 
 
 wss.on("connection", (ws) => {
-	//ws.send(JSON.stringify(store));
+	send(JSON.stringify(data));
 	ws.on("message", (event) => {
 		let data = JSON.parse(event)
 		if (data.t = "password") {
