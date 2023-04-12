@@ -12,7 +12,10 @@ app.get("/", (req, res) => {
 	res.sendFile(__dirname + "/web/index.html");
 });
 app.get("/message", (req, res) => {
-	if(res.query.token == 'password') send(JSON.stringify({message:res.query.m}));
+	if(req.query.token == 'password') {
+		send(JSON.stringify({message:req.query.m}));
+		res.send('ok');
+	}
 });
 
 wss.on("connection", (ws) => {
