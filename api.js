@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 app.get("/message", (req, res) => {
 	if(req.query.token == 'password') {
-		send(JSON.stringify({message:req.query.m}));
+		send(JSON.stringify({m:req.query.m}));
 		res.send('ok');
 	}
 });
