@@ -11,7 +11,9 @@ app.use(express.static(__dirname + "/web"));
 app.get("/", (req, res) => {
 	res.sendFile(__dirname + "/web/index.html");
 });
-
+app.get("/message", (req, res) => {
+	if(res.query.token == 'password') send(JSON.stringify({message:res.query.m}));
+});
 
 wss.on("connection", (ws) => {
 	ws.send(JSON.stringify(store));
