@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const SocketServer = require("ws").Server;
-const server = app.listen(8080, () => {
-	console.log("Application started and Listening on port 8080");
+const server = app.listen(3000, () => {
+	console.log("Application started and Listening on port 3000");
 });
 const wss = new SocketServer({ server });
 
