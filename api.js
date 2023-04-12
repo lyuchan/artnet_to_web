@@ -5,7 +5,7 @@ const server = app.listen(3000, () => {
 	console.log("Application started and Listening on port 3000");
 });
 const wss = new SocketServer({ server });
-let store = {0,0,0,0};
+let store = {r:0,g:0,b:0,s:0};
 
 app.use(express.static(__dirname + "/web"));
 app.get("/", (req, res) => {
