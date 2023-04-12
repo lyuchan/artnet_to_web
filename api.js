@@ -34,6 +34,7 @@ app.get('/update', (req, res) => {
 wss.on("connection", (ws) => {
 	ws.send(JSON.stringify(store));
 	ws.on("message", (event) => {
+		console.log(event);
 	});
 	ws.on("close", () => {
 	});
