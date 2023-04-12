@@ -32,7 +32,7 @@ app.get('/update', (req, res) => {
 });
 
 wss.on("connection", (ws) => {
-	ws.send(store);
+	ws.send(JSON.stringify(store));
 	ws.on("message", (event) => {
 	});
 	ws.on("close", () => {
