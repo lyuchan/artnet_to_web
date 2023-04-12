@@ -5,7 +5,7 @@ const server = app.listen(3000, () => {
 	console.log("Application started and Listening on port 3000");
 });
 const wss = new SocketServer({ server });
-let store = { r: 0, g: 0, b: 0, s: 0 };
+let store = { r: 0, g: 0, b: 0, s: 0, m: '' };
 
 app.use(express.static(__dirname + "/web"));
 app.get("/", (req, res) => {
@@ -13,6 +13,7 @@ app.get("/", (req, res) => {
 });
 app.get("/message", (req, res) => {
 	if(req.query.token == 'password') {
+		store.m = req.query.m;
 		send(JSON.stringify({m:req.query.m}));
 		res.send('ok');
 	}
@@ -25,6 +26,7 @@ wss.on("connection", (ws) => {
 		if (data.t = "password") {
 			delete data.t;
 			send(JSON.stringify(data));
+			data.m = store.m;
 			store = data;
 		}
 
