@@ -3,14 +3,45 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>light</title>
+    <title>愛樂有螢光棒</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <style>
         body {
             animation: blinker 1s steps(1, end) infinite;
-            /*background: #DDD;*/
+            background: rgb(0, 0, 0);
+            animation-duration: 0s;
+            color: #FFF;
+            text-align: center;
+            margin-top: 48vh;
+            font-size: 18px;
+            font-family: sans-serif;
         }
-
+        
+        a {
+            color: #FFF;
+            font-weight: 500
+        }
+        
+        footer {
+            background: rgba(0,0,0,.5);
+            color: #FFF;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            padding: 5px 0;
+            font-size: 12px;
+        }
+        
+        #status {
+            text-align: right;
+            width: 100%;
+            font-size: 10px;
+        }
+        
         @keyframes blinker {
             50% {
                 background: #000
@@ -19,51 +50,44 @@
     </style>
 </head>
 <script>
-
-    let url = window.location.href//取得當前網址
-    url = url.replace("https://", "");//去除https
-    url = url.replace("http://", "");//去除http
-    url = url.replace("webtally", "");//去除/
-    url = url.replace("/", "");//去除/
-    url = "ws://" + url;//加入ws://
+function connect() {
+    let url = 'ws://light.henrywu.tw:3000'
     var ws = new WebSocket(url)
     ws.onopen = () => {
+        document.getElementById('message').innerHTML = '';
     }
     ws.onclose = () => {
+        document.getElementById('message').innerHTML = '重新連線中';
+        setTimeout(function() {connect();}, 1000);
     }
     ws.onmessage = event => {
-
+        document.getElementById('message').innerHTML = '';
         let res = JSON.parse(event.data);
         // console.log(res)
-        document.body.style.backgroundColor = 'rgb(' + res.r + ',' + res.g + ',' + res.b + ')';
+        
+        if(res.m) {
+            document.getElementById('message').innerHTML = res.m;
+        } else document.getElementById('message').innerHTML = '';
+        
+        if(res.r!=undefined && res.g!=undefined && res.b!=undefined) {
+            document.body.style.backgroundColor = 'rgb(' + res.r + ',' + res.g + ',' + res.b + ')';
+        }
+
         if (res.s <= 55) {
-            document.body.style.animationDuration = ('0s'); // Change here
+            document.body.style.animationDuration = ('0s');
         } else {
             let time = ((200 - ((res.s) - 55)) - 0.05) * 0.45 / 200 + 0.05
             document.body.style.animationDuration = time + 's'; // Change here
         }
-
-
-        //console.log(event)
-
     }
-
-
+}   
+connect();
 </script>
 
-<body id="back" style="background-color: #000000">
-    <footer style="
-        background: #000;
-        color: #FFF;
-        text-align: center;
-        position: fixed;
-        width: 100%;
-        left: 0;
-        bottom: 0;
-        padding: 5px 0;
-        font-family: sans-serif;
-        font-size: 12px;
-    ">Made by Lyuchan and Henry Wu<br>Powered by MCUT Bot</footer>
+<body id="back" style="background: #000">
+    <div id="status"></div>
+    <div id="message"></div>
+    <footer>Made by Lyuchan and Henry Wu<br>Powered by MCUT Bot</footer>
 </body>
 
 </html>
