@@ -51,7 +51,7 @@
 </head>
 <script>
 function connect() {
-    let url = 'ws://light.henrywu.tw:3000'
+    let url = 'wss://light.henrywu.tw'
     var ws = new WebSocket(url)
     ws.onopen = () => {
         document.getElementById('message').innerHTML = '';
