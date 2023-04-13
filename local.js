@@ -1,5 +1,5 @@
 const WebSocket = require('ws');
-const socket = new WebSocket('ws://light.henrywu.tw:443');
+const socket = new WebSocket('ws://light.henrywu.tw:3000');
 var dmxlib = require('dmxnet');
 var dmxnet = new dmxlib.dmxnet({});
 var receiver = dmxnet.newReceiver({

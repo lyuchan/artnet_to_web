@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
 const SocketServer = require("ws").Server;
-const server = app.listen(443, () => {
-	console.log("Application started and Listening on port 443");
+const server = app.listen(3000, () => {
+	console.log("Application started and Listening on port 3000");
 });
 const wss = new SocketServer({ server });
 let store = { r: 0, g: 0, b: 0, s: 0, m: '' };
