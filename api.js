@@ -32,6 +32,10 @@ wss.on("connection", (ws) => {
 
 	});
 	ws.on("close", () => {
+		console.log()
+	});
+	ws.on('error', function error(err) {
+		console.error(err);
 	});
 });
 function send(data) {
