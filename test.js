@@ -1,5 +1,5 @@
 const WebSocket = require('ws');
-const socket = new WebSocket('ws://light.henrywu.tw:3000');
+const socket = new WebSocket('ws://localhost:3000');
 
 let r = 0;
 let g = 0;
