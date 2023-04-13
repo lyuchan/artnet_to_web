@@ -20,6 +20,7 @@ app.get("/message", (req, res) => {
 });
 
 wss.on("connection", (ws) => {
+	console.log('connected');
 	ws.send(JSON.stringify(store));
 	ws.on("message", (event) => {
 		let data = JSON.parse(event)
@@ -32,7 +33,7 @@ wss.on("connection", (ws) => {
 
 	});
 	ws.on("close", () => {
-		console.log()
+		console.log('closed');
 	});
 	ws.on('error', function error(err) {
 		console.error(err);
