@@ -16,7 +16,7 @@ app.get("/message", (req, res) => {
 		store.m = req.query.m;
 		send(JSON.stringify({m:req.query.m}));
 		res.send('ok');
-	}
+	} else res.send('err');
 });
 
 wss.on("connection", (ws) => {
