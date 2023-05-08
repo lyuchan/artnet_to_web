@@ -27,6 +27,7 @@ wss.on("connection", (ws) => {
 		if (data.t = "password") {
 			delete data.t;
 			data.m = store.m;
+			data.u = (wss.clients.size || 0)
 			send(JSON.stringify(data));
 			store = data;
 		}
