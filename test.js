@@ -24,7 +24,7 @@ socket.on('open', () => {
 			if(b >= 255) k = 0;
 		}
 		//console.log(r,g,b,k);
-		socket.send(JSON.stringify({ t: "password", r: r, g: g, b: b, s: 0 }));
+		socket.send(JSON.stringify({ t: "password", r: r, g: g, b: b, s: 0, bpm: 120 }));
 	},100);
 });
 socket.on('message', (message) => {
